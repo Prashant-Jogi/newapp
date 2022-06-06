@@ -37,11 +37,27 @@ const Demologin2 = () => {
     }
     if (fnameError || lnameError || emailError || phoneError) {
       setError({ fnameError, lnameError, emailError, phoneError });
+
+      return true;
     }
+    return false;
+  };
+  const defaultState = {
+    name: null,
+    email: null,
+    password: null,
+    nameError: null,
+    emailError: null,
+    passwordError: null,
   };
   const Submit = (e) => {
     e.preventDefault();
-    validate();
+    if (validate()) {
+      console.log(this.state.Error);
+
+      setError(defaultState);
+    }
+    console.log("ssss");
   };
 
   return (
@@ -53,7 +69,12 @@ const Demologin2 = () => {
           <form onSubmit={Submit}>
             <div>
               <label>Enter Your First Name</label>
-              <input name="fname" onChange={handler} type="text" />
+              <input
+                name="fname"
+                autoComplete="off"
+                onChange={handler}
+                type="text"
+              />
               <p hidden={!Error.fnameError ? true : false}>
                 {Error.fnameError}
               </p>
