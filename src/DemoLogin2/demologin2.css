@@ -1,0 +1,44 @@
+*{
+    margin:0;
+    padding:0;
+    background-color: rgb(213, 169, 224);
+    
+}
+.main{
+    display: flex;
+    margin: auto;
+    padding-top: 10%;
+}
+.content_div{
+    display: grid;
+    margin-top:20px;
+    width: 190px;
+    margin:auto;
+    
+}
+h1{
+    text-align: center;
+    margin-bottom: 10px;
+}
+p{
+    text-align: center;
+    margin-bottom: 20px;
+}
+label{
+    margin-bottom: 10px;
+}
+input{
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: white;
+}
+button{
+    margin:10px 0 0 0px;
+    
+    width: 95%;
+}
+p{
+    color:red;
+    font-size: small;
+    
+}
