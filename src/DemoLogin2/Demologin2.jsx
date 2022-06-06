@@ -9,40 +9,6 @@ const Demologin2 = () => {
     PhoneError: null,
   });
   const handler = (e) => {
-    // const value = e.target.value;
-    // const name = e.target.name;
-    // setData((prev) => {
-    //   if (name === "fname") {
-    //     return {
-    //       fname: value,
-    //       lname: prev.fname,
-    //       email: prev.lname,
-    //       phone: prev.phone,
-    //     };
-    //   } else if (name === "lname") {
-    //     return {
-    //       fname: prev.fname,
-    //       lname: value,
-    //       email: prev.email,
-    //       phone: prev.phone,
-    //     };
-    //   } else if (name === "email") {
-    //     return {
-    //       fname: prev.fname,
-    //       lname: prev.lname,
-    //       email: value,
-    //       phone: prev.phone,
-    //     };
-    //   } else if (name === "phone") {
-    //     return {
-    //       fname: prev.fname,
-    //       lname: prev.lname,
-    //       email: prev.email,
-    //       phone: value,
-    //     };
-    //   }
-    // });
-
     setData({
       ...Data,
       [e.target.name]: e.target.value,
@@ -65,7 +31,8 @@ const Demologin2 = () => {
     if (!email || reg.test(email) === false) {
       emailError = "Please Enter Valid Email";
     }
-    if (!phone) {
+    const phone_reg = /^[+91]*([0-9]\d{10})$/;
+    if (!phone || phone_reg.test(phone) === false) {
       phoneError = "Please Enter Phone Number";
     }
     if (fnameError || lnameError || emailError || phoneError) {
@@ -87,22 +54,30 @@ const Demologin2 = () => {
             <div>
               <label>Enter Your First Name</label>
               <input name="fname" onChange={handler} type="text" />
-              <p>{Error.fnameError}</p>
+              <p hidden={!Error.fnameError ? true : false}>
+                {Error.fnameError}
+              </p>
             </div>
             <div>
               <label>Enter Your Last Name</label>
               <input name="lname" onChange={handler} type="text" />
-              <p>{Error.lnameError}</p>
+              <p hidden={!Error.lnameError ? true : false}>
+                {Error.lnameError}
+              </p>
             </div>
             <div>
               <label>Enter Your Email</label>
               <input name="email" onChange={handler} type="text" />
-              <p>{Error.emailError}</p>
+              <p hidden={!Error.emailError ? true : false}>
+                {Error.emailError}
+              </p>
             </div>
             <div>
               <label>Enter Your Phone Number</label>
               <input name="phone" onChange={handler} type="number" />
-              <p>{Error.phoneError}</p>
+              <p hidden={!Error.phoneError ? true : false}>
+                {Error.phoneError}
+              </p>
             </div>
             <button type="submit">Submit</button>
           </form>
