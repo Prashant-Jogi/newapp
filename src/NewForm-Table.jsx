@@ -9,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { v4 as uuidv4 } from "uuid";
-
+import Checkbox from "./CheckBox";
 import "./newForm-table.css";
 
 const NewFormTable = () => {
@@ -19,7 +19,13 @@ const NewFormTable = () => {
     email: "",
     phone: "",
   });
-
+  const [filterParam, setFilterparam] = useState("fname");
+  const handleFilterChange = (e) => {
+    if (e.target.checked) {
+      setFilterparam(e.target.name);
+    }
+  };
+  console.log(filterParam, "filterParamfilterParam");
   const [Tdata, setTdata] = useState([]);
 
   const handler = (e) => {
@@ -86,6 +92,8 @@ const NewFormTable = () => {
       id: row.id,
     });
   };
+  const [filterText, setFilterText] = useState("");
+  const filter = (select) => {};
   return (
     <>
       <div className="main">
@@ -132,6 +140,60 @@ const NewFormTable = () => {
         </div>
 
         <div className="table">
+          <div className="checkbox">
+            <form>
+              <label>
+                <input
+                  type="checkbox"
+                  setFilterparam={setFilterparam}
+                  name="fname"
+                  id="dawda1"
+                  onChange={handleFilterChange}
+                />
+                First Name
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  setFilterparam={setFilterparam}
+                  name="lname"
+                  id="dawda1"
+                  onChange={handleFilterChange}
+                />
+                Last Name
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  setFilterparam={setFilterparam}
+                  name="email"
+                  id="dawda1"
+                  onChange={handleFilterChange}
+                />
+                Email
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  setFilterparam={setFilterparam}
+                  name="phone"
+                  id="dawda1"
+                  onChange={handleFilterChange}
+                />
+                Phone
+              </label>
+            </form>
+
+            <button onClick={filter} className="search_btn">
+              Filter
+            </button>
+          </div>
+          <input
+            type="text"
+            onChange={(e) => {
+              setFilterText(e.target.value);
+            }}
+          />
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 100 }} aria-label="simple table">
               <TableHead>
@@ -143,7 +205,12 @@ const NewFormTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {Tdata.map((row, index) => (
+                {Tdata.filter((data) => {
+                  return data[filterParam]
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase());
+                  console.log(data[filterParam], "datadatadatadata");
+                }).map((row, index) => (
                   <TableRow
                     id={index}
                     key={row.name}
