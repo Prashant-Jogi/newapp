@@ -4,6 +4,7 @@ import Sample from "./Sample";
 
 const NewTask = () => {
   const [data, setData] = useState([]);
+const [status, setStatus] = useState(false)
 
   const childToParent = (childdata) => {
     setData(childdata);
@@ -20,7 +21,7 @@ const NewTask = () => {
         <div className="center">
           <div className="header">
             <h1>UserData</h1>
-            <Sample childToParent={childToParent} />
+            <Sample childToParent={childToParent} setStatus={setStatus} />
             <button onClick={click}>Click</button>
           </div>
           <div className="table">
