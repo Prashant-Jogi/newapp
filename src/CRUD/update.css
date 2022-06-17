@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.main {
+  display: flex;
+  width: 100%;
+}
+h1 {
+  display: grid;
+  font-size: 25px;
+  width: 100%;
+  height: 50px;
+  text-align: center;
+}
+.center {
+  margin: auto;
+}
+.content {
+  margin-top: 0;
+}
+.box {
+  display: flex;
+  width: 100%;
+  margin-right: -50%;
+  align-content: flex-end;
+}
+.modal-dialog {
+  margin-left: 0;
+  height: 100%;
+  width: 100%;
+}
+.modal-dialog .modal-content {
+  margin-left: 0;
+  height: 100%;
+  width: 100%;
+}
+.fade.modal.show {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* height: 50%; */
+  width: 50%;
+  box-shadow: -2px 0px 19px -2px rgb(130, 129, 129);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(
+    140deg,
+    #a78e88 0%,
+    #bc70a4 50%,
+    #bfd641 75%
+  );
+  padding: 15px;
+  border-radius: 12px;
+}

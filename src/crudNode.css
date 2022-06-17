@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+#link {
+  text-decoration: none;
+  color: black;
+  margin-right: 5px;
+}
+.content {
+  width: 100%;
+  margin-top: 15%;
+}
+button {
+  margin-right: 20px;
+  text-align: center;
+}
+.main {
+  display: flex;
+}
+.center {
+  margin: auto;
+  margin-top: 5%;
+}
+h1 {
+  text-align: center;
+}

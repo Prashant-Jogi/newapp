@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.main {
+  display: flex;
+  width: 100%;
+}
+.center {
+  display: grid;
+}
+.content {
+  margin-top: 15%;
+  width: 200px;
+}
+button {
+  margin-top: 5px;
+}
