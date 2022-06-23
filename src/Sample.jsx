@@ -4,7 +4,6 @@ import NewTask from "./NewTask";
 
 const Sample = ({ childToParent }) => {
   const [userData, setUserData] = useState([]);
-  const [status, setStatus] = useState(false);
 
   useEffect(() => {
     response();
