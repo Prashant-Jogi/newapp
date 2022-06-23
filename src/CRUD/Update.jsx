@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import axios from "axios";
 import "./update.css";
+import { useSelector, useDispatch } from "react-redux";
+import { UpdateData } from "../redux/actions/index.js";
+import store from "../store";
 const Update = () => {
   const [data, setData] = useState({
     name: "",
@@ -11,29 +14,20 @@ const Update = () => {
   });
 
   const [userData, setUserData] = useState({});
-
-  //   const id = { id: "62a81faf4bb823eaa1c96e2f" };
-  const getAnswer = async () => {
-    await axios.get("http://localhost:5000/userData").then((res) => {
-      const data = res.data;
-      setData(data);
-      // console.log(data);
-    });
-  };
+  const dispatch = useDispatch();
+  const select = useSelector((state) => state.getTableData);
+  console.log(select, "update");
   useEffect(() => {
-    getAnswer();
+    dispatch(UpdateData());
+    setTimeout(() => setData(select), 0);
   }, []);
-  // const handler = (e) => {
-  //   if (filter === "name") {
-  //     setNewData({ name: e.target.value });
-  //   } else if (filter === "email") {
-  //     setNewData({ email: e.target.value });
-  //   } else if (filter === "number") {
-  //     setNewData({ number: e.target.value });
-  //   }
+  // const getAnswer = async () => {
+  //   await axios.get("http://localhost:5000/userData").then((res) => {
+  //     const data = res.data;
+  //     setData(data);
+  //     // console.log(data);
+  //   });
   // };
-
-  // console.log(newData, "data");
 
   const click = (id, ndata) => {
     setUserData(() => {
@@ -47,17 +41,17 @@ const Update = () => {
     handleShow();
   };
 
-  // const [filter, setfilter] = useState("");
-  // console.log(filter, "filter");
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const getAnswer = async () => {
+    await axios.get("http://localhost:5000/userData").then((res) => {
+      setData(res.data);
+    });
+  };
 
   const changes = () => {
-    // console.log(userData, "daaatatta");
-    // console.log(newData, "234567");
     const chData = {
       name: document.getElementById("name").innerHTML,
       email: document.getElementById("email").innerHTML,
@@ -65,12 +59,11 @@ const Update = () => {
     };
     const id = userData.id;
     axios.put(`http://localhost:5000/${id}`, chData).then((res) => {
-      console.log(res);
       getAnswer();
     });
     handleClose();
-    // console.log(chData);
   };
+
   return (
     <>
       <div className="main">

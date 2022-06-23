@@ -1,19 +1,25 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./crudNode.css";
 import { Outlet, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import ShowDataTable from "./actions/index.js";
+import {
+  ShowDataTable,
+  UpdateData,
+  GetDataTable,
+} from "./redux/actions/index.js";
+import getTableData from "./redux/reducers";
 const CrudNode = () => {
-  const [temp, setTemp] = useState();
-  const state = useSelector((state) => state.getTableData);
-
+  const [data, setData] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(ShowDataTable());
-  }, [dispatch]);
-  console.log(state);
+  }, []);
+  // const getAnswer = async () => {
+  //   await axios.get("http://localhost:5000/userData").then((res) => {
+  //     dispatch(ShowDataTable());
+  //   });
+  // };
   return (
     <>
       <div className="main">
@@ -40,7 +46,7 @@ const CrudNode = () => {
               </Link>
             </button>
           </div>
-
+          {/* <button onClick={() => dispatch(incrementAsync())}>Click</button> */}
           <div className="content">
             <Outlet />
           </div>

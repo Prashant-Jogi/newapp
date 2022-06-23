@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import { ShowDataTable, GetDataTable, UpdateData } from "../redux/actions";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-
+import { useDispatch, useSelector } from "react-redux";
 import "./read.css";
 const Read = () => {
   // to set data which comes from axios.get
@@ -16,16 +16,36 @@ const Read = () => {
     number: "",
   });
   //getting data from backend
-  const getAnswer = async () => {
-    await axios.get("http://localhost:5000/userData").then((res) => {
-      const data = res.data;
-      setData(data);
-    });
-  };
+  // const getAnswer = async () => {
+  //   await axios.get("http://localhost:5000/userData").then((res) => {
+  //     const data = res.data;
+  //     setData(data);
+  //   });
+  // };
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    getAnswer();
+  const select = useSelector((state) => state.getTableData.state);
+
+  console.log(select, "select");
+  useEffect(async () => {
+    dispatch(UpdateData());
+    await setTimeout(() => setData(select), 0);
   }, []);
+
+  // console.log(Object.values(data), "data");
+  // useEffect(() => {
+  //   if (select) {
+  //     setData(select);
+  //   }
+  //   console.log(select, "select");
+  //   console.log(data, "data");
+  // }, [select]);
+  // // useEffect(() => {
+  //   const temp = async () => {
+  //     await setData(select);
+  //   };
+  //   temp();
+  // }, []);
   //  filterparam store checked / unchecked value for radio buttons
   const [filterParam, setfilterparam] = useState("");
   //onChange handler for radio buttons

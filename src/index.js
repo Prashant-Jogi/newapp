@@ -1,17 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
 import Add from "./CRUD/Add";
 import Delete from "./CRUD/Delete";
 import Read from "./CRUD/Read";
 import Update from "./CRUD/Update";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CrudNode from "./CrudNode";
-// import "bootstrap/dist/css/bootstrap.css";
-// import NewFormTable from "./NewForm-Table";
 import store from "./store";
 import { Provider } from "react-redux";
-const Routing = () => {
+
+const Routing = (store) => {
   return (
     <>
       <BrowserRouter>

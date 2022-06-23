@@ -26,6 +26,7 @@ const Add = () => {
       }
     });
   };
+
   return (
     <>
       <div className="main">
