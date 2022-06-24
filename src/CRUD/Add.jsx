@@ -1,9 +1,12 @@
-import axios from "axios";
 import React, { useState } from "react";
+import { AddData } from "../redux/actions";
+import { useDispatch } from "react-redux";
 import "./add.css";
 const Add = () => {
   const [data, setData] = useState();
   //   const [userData, setUserData] = useState();
+  const dispatch = useDispatch();
+
   const handler = (e) => {
     setData({
       ...data,
@@ -18,13 +21,15 @@ const Add = () => {
       number: data.number,
     };
     console.log(data);
-    axios.post("http://localhost:5000/add", userData).then((result) => {
-      if (result) {
-        console.log(result, "Succesfully Sign up");
-      } else {
-        console.log("invalid");
-      }
-    });
+    dispatch(AddData(userData));
+
+    // axios.post("http://localhost:5000/add", userData).then((result) => {
+    //   if (result) {
+    //     console.log(result, "Succesfully Sign up");
+    //   } else {
+    //     console.log("invalid");
+    //   }
+    // });
   };
 
   return (

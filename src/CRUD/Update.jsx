@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
-import axios from "axios";
 import "./update.css";
 import { useSelector, useDispatch } from "react-redux";
-import { UpdateData } from "../redux/actions/index.js";
-import store from "../store";
+import { ShowData, ChangeData } from "../redux/actions/index.js";
+
 const Update = () => {
   const [data, setData] = useState({
     name: "",
@@ -15,12 +14,15 @@ const Update = () => {
 
   const [userData, setUserData] = useState({});
   const dispatch = useDispatch();
-  const select = useSelector((state) => state.getTableData);
-  console.log(select, "update");
+  const select = useSelector((state) => state.getTableData.tableData);
+  const func = () => {
+    dispatch(ShowData());
+    setData(select);
+    console.log("here");
+  };
   useEffect(() => {
-    dispatch(UpdateData());
-    setTimeout(() => setData(select), 0);
-  }, []);
+    func();
+  }, [!select]);
   // const getAnswer = async () => {
   //   await axios.get("http://localhost:5000/userData").then((res) => {
   //     const data = res.data;
@@ -45,11 +47,6 @@ const Update = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const getAnswer = async () => {
-    await axios.get("http://localhost:5000/userData").then((res) => {
-      setData(res.data);
-    });
-  };
 
   const changes = () => {
     const chData = {
@@ -58,9 +55,14 @@ const Update = () => {
       number: document.getElementById("number").innerHTML,
     };
     const id = userData.id;
-    axios.put(`http://localhost:5000/${id}`, chData).then((res) => {
-      getAnswer();
-    });
+    dispatch(ChangeData(chData, id));
+    // axios.put(`http://localhost:5000/${id}`, chData).then((res) => {
+    //   func();
+
+    //   console.log(res.data, "res data");
+    //   console.log(select, "update");
+    // });
+
     handleClose();
   };
 
@@ -78,7 +80,8 @@ const Update = () => {
                   <th>Number</th>
                 </tr>
               </thead>
-              {data.length > 0 &&
+              {data &&
+                data.length > 0 &&
                 data.map((ndata, index) => {
                   return (
                     <>

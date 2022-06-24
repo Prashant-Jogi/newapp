@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { ShowDataTable, UpdateData } from "../redux/actions";
+import { ShowData, DeleteData } from "../redux/actions";
 const Delete = () => {
   const [data, setData] = useState({
     name: "",
@@ -9,15 +8,12 @@ const Delete = () => {
     number: "",
   });
   const dispatch = useDispatch();
-  //   const id = { id: "62a81faf4bb823eaa1c96e2f" };
 
-  const select = useSelector((state) => state.getTableData.state);
-  useEffect(async () => {
-    dispatch(UpdateData());
-
-    await setTimeout(() => setData(select), 0);
-  }, []);
-
+  const select = useSelector((state) => state.getTableData.tableData);
+  useEffect(() => {
+    dispatch(ShowData());
+    setData(select);
+  }, [!select]);
   // const getAnswer = async () => {
   //   await axios.get("http://localhost:5000/userData").then((res) => {
   //     setData(res.data);
@@ -27,10 +23,7 @@ const Delete = () => {
   //   getAnswer();
   // }, []);
   const Delete = (id) => {
-    axios.delete(`http://localhost:5000/${id}`).then((res) => {
-      // console.log(res);
-      // getAnswer();
-    });
+    dispatch(DeleteData(id));
   };
 
   return (
@@ -48,7 +41,8 @@ const Delete = () => {
                   <th>Number</th>
                 </tr>
               </thead>
-              {data.length > 0 &&
+              {data &&
+                data.length > 0 &&
                 data.map((ndata, index) => {
                   return (
                     <>

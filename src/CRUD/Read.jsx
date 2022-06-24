@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { ShowDataTable, GetDataTable, UpdateData } from "../redux/actions";
+import { ShowData } from "../redux/actions";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -10,29 +9,22 @@ import { useDispatch, useSelector } from "react-redux";
 import "./read.css";
 const Read = () => {
   // to set data which comes from axios.get
-  const [data, setData] = useState({
-    name: "",
-    email: "",
-    number: "",
-  });
+  const [data, setData] = useState({});
   //getting data from backend
-  // const getAnswer = async () => {
-  //   await axios.get("http://localhost:5000/userData").then((res) => {
-  //     const data = res.data;
-  //     setData(data);
-  //   });
-  // };
+
   const dispatch = useDispatch();
+  const select = useSelector((state) => state.getTableData.tableData);
 
-  const select = useSelector((state) => state.getTableData.state);
-
+  const func = () => {
+    dispatch(ShowData());
+    setData(select);
+    console.log("here");
+  };
+  useEffect(() => {
+    func();
+  }, [!select]);
   console.log(select, "select");
-  useEffect(async () => {
-    dispatch(UpdateData());
-    await setTimeout(() => setData(select), 0);
-  }, []);
-
-  // console.log(Object.values(data), "data");
+  console.log(data, "data");
   // useEffect(() => {
   //   if (select) {
   //     setData(select);
@@ -130,7 +122,8 @@ const Read = () => {
                 <th>Number</th>
               </tr>
               {/* filter data */}
-              {data.length > 0 &&
+              {data &&
+                data.length > 0 &&
                 data
                   .filter((data1) => {
                     if (filterText === "") {
@@ -160,6 +153,7 @@ const Read = () => {
                       return data1;
                     }
                   })
+
                   .map((ndata) => {
                     return (
                       <tr key={ndata._id}>

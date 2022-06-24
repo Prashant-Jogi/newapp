@@ -1,12 +1,10 @@
-const intitialState = {};
-const getTableData = (state, action) => {
+const getTableData = (state = {}, action) => {
   switch (action.type) {
-    case "DATASHOW":
-      const data = action.payload.data;
-      state = data;
-      console.log(state, "state");
-      return { state };
-    case "UPDATE":
+    case "SHOW":
+      state = action.payload;
+      return { tableData: action.payload };
+    case "DEMO":
+      console.log(state, "demo");
       return { ...state };
     default:
       return { state };
