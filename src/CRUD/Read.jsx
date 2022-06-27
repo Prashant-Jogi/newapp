@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ShowData } from "../redux/actions";
+import { ShowData, Demo } from "../redux/actions";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -15,16 +15,18 @@ const Read = () => {
   const dispatch = useDispatch();
   const select = useSelector((state) => state.getTableData.tableData);
 
-  const func = () => {
-    dispatch(ShowData());
-    setData(select);
-    console.log("here");
-  };
+  // const func = () => {
+  //   console.log("here");
+  // };
   useEffect(() => {
-    func();
-  }, [!select]);
-  console.log(select, "select");
-  console.log(data, "data");
+    // dispatch(Demo());
+    dispatch(ShowData());
+  }, []);
+  useEffect(() => {
+    setData(select);
+  }, [select !== data]);
+  // console.log(select, "select");
+  // console.log(data, "data");
   // useEffect(() => {
   //   if (select) {
   //     setData(select);

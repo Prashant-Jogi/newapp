@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ShowData, DeleteData } from "../redux/actions";
+import { ShowData, DeleteData, Demo, updateData } from "../redux/actions";
 const Delete = () => {
   const [data, setData] = useState({
     name: "",
@@ -11,9 +11,9 @@ const Delete = () => {
 
   const select = useSelector((state) => state.getTableData.tableData);
   useEffect(() => {
-    dispatch(ShowData());
+    dispatch(Demo());
     setData(select);
-  }, [!select]);
+  }, [select !== data]);
   // const getAnswer = async () => {
   //   await axios.get("http://localhost:5000/userData").then((res) => {
   //     setData(res.data);
@@ -23,7 +23,11 @@ const Delete = () => {
   //   getAnswer();
   // }, []);
   const Delete = (id) => {
+    const updated = data.filter((item) => item._id !== id);
+
+    setData(updated);
     dispatch(DeleteData(id));
+    dispatch(updateData(updated));
   };
 
   return (

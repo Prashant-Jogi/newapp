@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { AddData } from "../redux/actions";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { AddData, ShowData, Demo } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 import "./add.css";
 const Add = () => {
+  const select = useSelector((state) => state.getTableData.tableData);
+
   const [data, setData] = useState();
   //   const [userData, setUserData] = useState();
   const dispatch = useDispatch();
@@ -20,8 +22,14 @@ const Add = () => {
       email: data.email,
       number: data.number,
     };
-    console.log(data);
+
     dispatch(AddData(userData));
+    // if (userData) {
+    //   dispatch(ShowData());
+    //   console.log("done");
+    // } else {
+    //   console.log("data not found");
+    // }
 
     // axios.post("http://localhost:5000/add", userData).then((result) => {
     //   if (result) {

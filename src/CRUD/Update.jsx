@@ -2,27 +2,32 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import "./update.css";
 import { useSelector, useDispatch } from "react-redux";
-import { ShowData, ChangeData } from "../redux/actions/index.js";
+import {
+  ShowData,
+  ChangeData,
+  Demo,
+  updateData,
+} from "../redux/actions/index.js";
 
 const Update = () => {
   const [data, setData] = useState({
     name: "",
     email: "",
     number: "",
-    _id: "",
+    id: "",
   });
 
   const [userData, setUserData] = useState({});
+  // console.log(userData, "userData");
   const dispatch = useDispatch();
   const select = useSelector((state) => state.getTableData.tableData);
   const func = () => {
-    dispatch(ShowData());
+    dispatch(Demo());
     setData(select);
-    console.log("here");
   };
   useEffect(() => {
     func();
-  }, [!select]);
+  }, [select !== data]);
   // const getAnswer = async () => {
   //   await axios.get("http://localhost:5000/userData").then((res) => {
   //     const data = res.data;
@@ -32,12 +37,13 @@ const Update = () => {
   // };
 
   const click = (id, ndata) => {
+    console.log(ndata, "ndata");
     setUserData(() => {
       return {
         name: ndata.name,
         email: ndata.email,
         number: ndata.number,
-        id: ndata._id,
+        _id: id,
       };
     });
     handleShow();
@@ -49,21 +55,36 @@ const Update = () => {
   const handleShow = () => setShow(true);
 
   const changes = () => {
-    const chData = {
-      name: document.getElementById("name").innerHTML,
-      email: document.getElementById("email").innerHTML,
-      number: document.getElementById("number").innerHTML,
-    };
-    const id = userData.id;
-    dispatch(ChangeData(chData, id));
-    // axios.put(`http://localhost:5000/${id}`, chData).then((res) => {
-    //   func();
-
-    //   console.log(res.data, "res data");
-    //   console.log(select, "update");
-    // });
+    // const chData = {
+    //   name: userData.name,
+    //   email: userData.email,
+    //   number: userData.number,
+    // };
+    // const dataArr = { data };
+    // console.log(dataArr, "dataArr befor");
+    data.map((Data) => {
+      if (Data._id === userData._id) {
+        Object.keys(Data).map((key) => {
+          Data[key] = userData[key];
+          console.log(key, "key");
+        });
+      }
+    });
+    const id = userData._id;
+    dispatch(ChangeData(userData, id));
+    dispatch(updateData(data));
 
     handleClose();
+  };
+  const updateChange = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    setUserData((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
   };
 
   return (
@@ -86,13 +107,13 @@ const Update = () => {
                   return (
                     <>
                       <tbody>
-                        <tr key={index}>
+                        <tr key={ndata._id}>
                           <td>{ndata.name}</td>
                           <td>{ndata.email}</td>
                           <td>{ndata.number}</td>
                           <button
                             onClick={() => {
-                              click(index, ndata);
+                              click(ndata._id, ndata);
                             }}
                           >
                             Option
@@ -113,14 +134,35 @@ const Update = () => {
                     <th>Number</th>
                   </tr>
                   <tr>
-                    <td id="name" contentEditable={true}>
-                      {userData.name}
+                    <td>
+                      <input
+                        contentEditable={true}
+                        id="name"
+                        type="text"
+                        name="name"
+                        value={userData.name}
+                        onChange={updateChange}
+                      />
                     </td>
-                    <td id="email" contentEditable={true}>
-                      {userData.email}
+                    <td>
+                      <input
+                        contentEditable={true}
+                        id="email"
+                        type="text"
+                        name="email"
+                        value={userData.email}
+                        onChange={updateChange}
+                      />
                     </td>
-                    <td id="number" contentEditable={true}>
-                      {userData.number}
+                    <td>
+                      <input
+                        contentEditable={true}
+                        id="number"
+                        type="number"
+                        name="number"
+                        value={userData.number}
+                        onChange={updateChange}
+                      />
                     </td>
                   </tr>
                 </table>
